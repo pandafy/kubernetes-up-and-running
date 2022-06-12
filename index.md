@@ -15,3 +15,5 @@ Go read the book yourself!
 1. [Introduction](chapters/01-introduction.md)
 2. [Creating and Running Containers](chapters/02-creating-and-running-containers.md)
 3. [Deploying a Kubernetes Cluster](chapters/03-deploying-a-kubernetes-cluster.md)
+4. [Common `kubectl` commands](chapters/04-common-kubectl-commands.md)
+5. [Pods](chapters/05-pods.md)
