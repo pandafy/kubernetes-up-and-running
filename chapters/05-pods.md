@@ -51,4 +51,4 @@ persistent volumes through `emptyDir` and `hostPath` volumes.
 - `emptyDir` volumes are scoped to the pod's lifespan, but they can be
   shared between containers on the pod.
 
-Note Created: 2022-06-12
+*Note Created: 2022-06-12*

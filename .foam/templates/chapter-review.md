@@ -6,4 +6,4 @@
 
 ## Did I know?
 
-Note Created: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}
+*Note Created: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}*

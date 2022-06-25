@@ -32,4 +32,4 @@ The chapter also includes tips for reducing the size of the image.
   - `--cpu-shares`
   More tags can be found in the [Docker documentations](https://docs.docker.com/engine/reference/run/#runtime-constraints-on-resources)
 
-Note Created: 2022-06-11
+*Note Created: 2022-06-11*

@@ -40,4 +40,4 @@ This chapter introduces commonly used `kubectl` commands.
   $ kubectl cp <pod-name>:</path/to/remote/file> </path/to/local/file>
   ```
 
-Note Created: 2022-06-12
+*Note Created: 2022-06-12*

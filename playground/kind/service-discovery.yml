@@ -1,0 +1,93 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpaca-prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: alpaca
+      env: prod
+  template:
+    metadata:
+      labels:
+        ver: "1"
+        app: alpaca
+        env: prod
+    spec:
+      containers:
+        - name: alpaca
+          image: gcr.io/kuar-demo/kuard-amd64:blue
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            periodSeconds: 2
+            initialDelaySeconds: 0
+            failureThreshold: 3
+            successThreshold: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpaca-prod
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: alpaca
+    env: prod
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bandicoot-prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bandicoot
+      env: prod
+  template:
+    metadata:
+      labels:
+        ver: "2"
+        app: bandicoot
+        env: prod
+    spec:
+      containers:
+        - name: bandicoot
+          image: gcr.io/kuar-demo/kuard-amd64:green
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bandicoot-prod
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: bandicoot
+    env: prod
+
+

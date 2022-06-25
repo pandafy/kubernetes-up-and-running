@@ -1,0 +1,164 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hostname-based-ingress
+spec:
+  # If a HTTP request does not matches any of the rule,
+  # it will be set to the default backend.
+  defaultBackend:
+    service:
+      name: be-default
+      port:
+        number: 8080
+  rules:
+    - host: alpaca.example.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: alpaca
+                port:
+                  number: 8080
+    - host: bandicoot.example.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: bandicoot
+                port:
+                  number: 8080
+          - pathType: Prefix
+            path: "/a/"
+            backend:
+              service:
+                name: alpaca
+                port:
+                  number: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: be-default
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: be-default
+    env: prod
+  type: ClusterIP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: alpaca
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: alpaca
+    env: prod
+  type: ClusterIP
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: bandicoot
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: bandicoot
+    env: prod
+  type: ClusterIP
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: be-default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: be-default
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: be-default
+        env: prod
+    spec:
+      containers:
+        - name: be-default
+          image: gcr.io/kuar-demo/kuard-amd64:blue
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: alpaca
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: alpaca
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: alpaca
+        env: prod
+    spec:
+      containers:
+        - name: alpaca
+          image: gcr.io/kuar-demo/kuard-amd64:green
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: bandicoot
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bandicoot
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: bandicoot
+        env: prod
+    spec:
+      containers:
+        - name: bandicoot
+          image: gcr.io/kuar-demo/kuard-amd64:purple
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP

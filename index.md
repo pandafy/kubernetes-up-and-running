@@ -10,10 +10,14 @@ are just collection of such interesting bits.
 
 Go read the book yourself!
 
-## Index
+## Table of Contents
 
 1. [Introduction](chapters/01-introduction.md)
 2. [Creating and Running Containers](chapters/02-creating-and-running-containers.md)
 3. [Deploying a Kubernetes Cluster](chapters/03-deploying-a-kubernetes-cluster.md)
 4. [Common `kubectl` commands](chapters/04-common-kubectl-commands.md)
 5. [Pods](chapters/05-pods.md)
+6. [Labels and Annotations](chapters/06-labels-and-annotations.md)
+7. [Service Discovery](chapters/07-service-discovery.md)
+8. [HTTP Load Balancing with Ingress](chapters/08-http-load-balancing-with-ingress.md)
+9. [ReplicaSets](chapters/09-replicasets.md)
